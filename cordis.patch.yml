@@ -1,0 +1,27 @@
+# dsh-workspace-fix — bundle patch layer.
+#
+# Disables the adaptive directory-picker row (which can resolve to the `native`
+# OS-chooser backend) and composes the in-browser `browse` backend with its
+# client surface instead.
+#
+# Same composition the product itself uses to pin the interaction in
+# apps/web/tests/pin-browse-picker.overlay.yml and in its Playwright scaffold:
+# the native client surface is renderless and awaits an OS dialog, so when that
+# dialog never returns the workspace picker stays busy forever and every
+# "Add workspace" / "New workspace" press is a silent no-op. The browse backend
+# serves the listing over the web connection and therefore always works.
+
+# 1. Stand down the adaptive chooser (native or browse) so it cannot repick native.
+- id: directory-picker
+  disabled: true
+
+# 2. Mount the interaction the web client can always drive: host listing
+#    backend + its paired client surface, plus a self-report plugin so the pin
+#    is observable in the host log.
+- insert:
+    - id: directory-picker-browse
+      name: '@deepseek-ai/dsh-host-directory-picker-browse'
+    - id: ui-directory-picker-browse
+      name: '@deepseek-ai/dsh-client-ui-directory-picker-browse'
+    - id: workspace-fix
+      name: 'dsh-workspace-fix'

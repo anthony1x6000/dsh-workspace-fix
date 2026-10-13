@@ -1,0 +1,35 @@
+{
+  "name": "dsh-workspace-fix",
+  "version": "0.1.0",
+  "description": "DeepSeek Harness bundle plugin that fixes a workspace \"Add workspace\" / \"New workspace\" button that does nothing by pinning the directory picker to the in-browser browse backend instead of a native OS chooser that never returns.",
+  "keywords": [
+    "deepseek-harness",
+    "dsh-plugin",
+    "directory-picker",
+    "workspace"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "main": "./index.js",
+  "exports": {
+    ".": {
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "cordis.patch.yml",
+    "README.md",
+    "verify-button.mjs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anthony1x6000/dsh-workspace-fix.git"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}
